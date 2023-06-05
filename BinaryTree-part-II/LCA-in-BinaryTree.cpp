@@ -1,27 +1,40 @@
-/**
- * Definition for a binary tree node.
- * struct TreeNode {
- *     int val;
- *     TreeNode *left;
- *     TreeNode *right;
- *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
- * };
- */
-class Solution {
-public:
-    map<int,int>dpth;
-    map<int,int>pth;
-    void helper(TreeNode*root,TreeNode* p,vector<int>&temp,int lvl){
+// problem link: https://www.codingninjas.com/codestudio/problems/920541?topList=striver-sde-sheet-problems&utm_source=striver&utm_medium=website&leftPanelTab=0
+
+
+#include <bits/stdc++.h> 
+/************************************************************
+
+    Following is the TreeNode class structure
+
+    template <typename T>
+    class TreeNode {
+       public:
+        T data;
+        TreeNode<T> *left;
+        TreeNode<T> *right;
+
+        TreeNode(T data) {
+            this->data = data;
+            left = NULL;
+            right = NULL;
+        }
+    };
+
+************************************************************/
+    unordered_map<int,int>dpth;
+    unordered_map<int,int>pth;
+    void helper(TreeNode<int> *root,int p,vector<int>&temp,int lvl){
         if(root!=NULL){
-            dpth[root->val]=lvl;
-            temp.push_back(root->val);
+            dpth[root->data]=lvl;
+            temp.push_back(root->data);
             
-            if(root->val ==p->val){
+            if(root->data ==p){
                 
             for(auto x:temp)
                  pth[x]++;
              
-             }
+               
+            }
             
             helper(root->left,p,temp,lvl+1);
             helper(root->right,p,temp,lvl+1);
@@ -30,9 +43,9 @@ public:
         }
         
     }
-    
-    TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) {
-        vector<int>temp;
+int lowestCommonAncestor(TreeNode<int> *root, int p, int q)
+{   
+	 vector<int>temp;
         helper(root,p,temp,0);
         helper(root,q,temp,0);
         int maxi=0;
@@ -44,11 +57,11 @@ public:
                 data=x.first;
             }
         }
-        TreeNode* ans=new TreeNode(data);
+       dpth.clear();
+       pth.clear();
         
-        return ans;
-    } 
-};
+        return data;
+}
 /*
         1
        / \
